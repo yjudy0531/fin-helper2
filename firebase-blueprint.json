@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile document storing basic account metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The Firebase Auth user UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "createdAt"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "A conversation or mock interview session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique session ID" },
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "title": { "type": "string", "maxLength": 100, "description": "Title of the session" },
+        "type": { "type": "string", "enum": ["chat", "interview"], "description": "Type of session" },
+        "targetBank": { "type": "string", "maxLength": 50, "description": "Target financial institution" },
+        "targetRole": { "type": "string", "maxLength": 50, "description": "Target job position" },
+        "questionIndex": { "type": "number", "description": "Current interview question index (0 to 5)" },
+        "isFinished": { "type": "boolean", "description": "Whether interview is completed" },
+        "overallReview": { "type": "string", "maxLength": 2000, "description": "Final evaluation summary" },
+        "createdAt": { "type": "string", "description": "Session creation ISO string" },
+        "updatedAt": { "type": "string", "description": "Last update ISO string" }
+      },
+      "required": ["id", "userId", "title", "type", "createdAt", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "An individual message within a session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID" },
+        "sessionId": { "type": "string", "description": "Parent session ID" },
+        "userId": { "type": "string", "description": "Author UID" },
+        "role": { "type": "string", "enum": ["user", "assistant", "system"], "description": "Sender role" },
+        "content": { "type": "string", "maxLength": 5000, "description": "Message textual content" },
+        "questionNumber": { "type": "number", "description": "Mock interview question number (1-5)" },
+        "evaluation": { "type": "object", "description": "Structured evaluation scores and feedback" },
+        "createdAt": { "type": "string", "description": "Message timestamp" }
+      },
+      "required": ["id", "sessionId", "userId", "role", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile collection"
+    },
+    "/users/{userId}/sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "User interview and consultation sessions"
+    },
+    "/users/{userId}/sessions/{sessionId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages belonging to a session"
+    }
+  }
+}

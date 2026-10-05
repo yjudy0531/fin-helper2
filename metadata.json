@@ -1,0 +1,7 @@
+{
+  "name": "뱅크패스 - 금융권 취업 면접·자소서 AI 코치",
+  "description": "시중은행 인사담당자 출신 AI 코치와 함께하는 금융권(은행·증권) 맞춤형 자소서 첨삭 및 직무별 실전 모의면접 플랫폼",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
